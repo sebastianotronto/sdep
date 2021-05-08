@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Removes old events from specified file (default: SDEPDATA/once).
+
+# Usage: sdep-clear [file]
+
+file="SDEPDATA/${1:-once}"
+temp=$(mktemp)
+
+sdep -t <"$file" >"$temp"
+mv "$temp" "$file"
