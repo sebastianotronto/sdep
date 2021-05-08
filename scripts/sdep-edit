@@ -5,7 +5,7 @@
 # Usage: sdep-edit [file]
 # No options = once
 
-file="SDEPFOLDER/${1:-once}"
+file="SDEPDATA/${1:-once}"
 editor=${VISUAL:-vi}
 
 $editor "$file"
