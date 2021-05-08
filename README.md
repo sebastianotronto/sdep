@@ -11,11 +11,11 @@ system.
 ## Description
 
 sdep reads lines of the form `date text` from stdin and writes to stdout those
-lines such that `date` is between the two dates specified by the `-f` and `-t`
-options, both of which default to the current minute.
+lines such that `date` is between the two dates specified with the `-f` and
+`-t` options, both of which default to the current minute.
 
-The dates should correspond to a unique minute in time. The format for `date`
-can be specified with the same syntax as for date(1).
+The format for `date` can be specified with the same syntax as for date(1).
+The dates should correspond to a unique minute in time. 
 
 ## Installation
 Edit the Makefile to match your local configuration and type `make install`.
@@ -86,10 +86,10 @@ between multiple devices using something like
 
 ## Scripts
 The `scripts` folder contains the few scripts that I use. They are basically 
-just a slightly more elaborate version of the calendar system described above,
+just a more elaborate version of the calendar system described above,
 with support for recurring events (e.g. weekly, daily). You can install them
 with `make scripts`, but first make sure to adjust them to match your local
 configuration, like the location of the events file.
 
-Most of the script rely on the `-d` option of the GNU date utility, so you
+Most of the scripts rely on the `-d` option of the GNU date utility, so you
 should change that too if you are on a BSD system or on MacOS.
