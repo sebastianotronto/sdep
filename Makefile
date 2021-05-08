@@ -2,7 +2,7 @@
 
 VERSION = 0.1
 
-PREFIX = ${HOME}/.local
+PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 SDEPDATA = ${XDG_DATA_HOME}/sdep
 SCRIPTS = sdep-add sdep-checknow sdep-clear sdep-edit sdep-list
