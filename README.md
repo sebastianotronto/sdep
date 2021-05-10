@@ -89,7 +89,8 @@ The `scripts` folder contains the few scripts that I use. They are basically
 just a more elaborate version of the calendar system described above,
 with support for recurring events (e.g. weekly, daily). You can install them
 with `make scripts`, but first make sure to adjust them to match your local
-configuration, like the location of the events file.
+configuration.
+For example check that the folder SDEPDATA in Makefile suits you.
 
 Most of the scripts rely on the `-d` option of the GNU date utility, so you
 should change that too if you are on a BSD system or on MacOS.
