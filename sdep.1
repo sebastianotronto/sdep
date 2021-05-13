@@ -1,106 +1,94 @@
-.TH SDEP 1 sdep\-VERSION
+.Dd May 13, 2021
+.Dt SDEP 1
+.Os
+.Sh NAME
+.Nm sdep
+.Nd a simple "date+event" line parser
 
-.SH NAME
-sdep \- a simple "date+event" line parser
+.Sh SYNOPSIS
+.Nm
+.Op Fl dv
+.Op Ar +format
+.Op Fl f Op Ar date
+.Op Fl t Op Ar date
+.Op Fl w Ar format
+.Op Fl s Ar string
 
-.SH SYNOPSIS
-.B sdep
-.RB [ \-dv ]
-.IR "[+format]"
-.RB [ \-f 
-.IR "[date]" ]
-.RB [ \-t 
-.IR "[date]" ]
-.RB [ \-w
-.IR format ]
-.RB [ \-s
-.IR string ]
-
-.SH DESCRIPTION
-.B sdep
+.Sh DESCRIPTION
+.Nm
 reads lines of the form
 
-.IR "date text"
+.Dl Ar "date text"
 
 from stdin and writes to stdout those lines such that
-.IR date
-is between the two dates specified by the
-.IR \-f
+.Ar date
+is between the dates specified by the
+.Fl f
 and
-.IR \-t
-options, both of which default to the current minute.
+.Fl t
+options, both defaulting to the current minute.
 The dates should correspond to a unique minute in time. The format for
-.IR date
+.Ar date
 can be specified with the same syntax as for
-.IR date (1).
+.Xr date 1 .
 
-.SH OPTIONS
-
-.TP
-.B \-d
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl d
 print the default date format and exit.
-
-.TP
-.BI \-f " [date]"
+.It Fl f Op Ar date
 initial date for the range (default: current minute). If
-.I date
-is not specified then there will be no lower bound for the dates.
-
-.TP
-.BI \-s " string"
+.Ar date
+is not specified there will be no lower bound for the dates.
+.It Fl s Ar string
 change the string that separates the date from the text in the output
 lines (deafult: "\t").
-
-.TP
-.BI \-t " [date]"
+.It Fl t Op Ar date
 final date for the range (default: current minute). If
-.I date
+.Ar date
 is not specified then there will be no upper bound for the dates.
-
-.TP
-.B \-v
+.It Fl v
 print version information and exit.
-
-.TP
-.BI \-w " format"
+.It Fl w Ar format
 change the format in which the date is written in the output lines.
 
-.SH EXAMPLES
+.Sh EXAMPLES
 If
-.I events.txt
+.Ar events.txt
 contains lines formatted as
-.I "date text"
+.Ar "date text"
 then
 
-sdep -f <events.txt
+.Dl sdep -f <events.txt
 
 will print all the lines whose date is in the past, while
 
-sdep -t -w "%A" <events.txt
+.Dl sdep -t -w "%A" <events.txt
 
 will print all lines whose date is in the future, showing only the day of the
 week and the text.
 
-sdep -f "1999-01-01 00:00" -t "1999-12-31 23:59" -w "" <events.txt
+.Dl sdep -f "1999-01-01 00:00" -t "1999-12-31 23:59" -w "" <events.txt
 
 will show only the
-.I text
+.Ar text
 of all lines with a date in 1999. You can specify a different format for the
 dates, for example
 
-sdep +"%m/%d/%Y %I:%M%p" -t "12/31/2020 11:59pm" -w "" <events.txt
+.Dl sdep +"%m/%d/%Y %I:%M%p" -t "12/31/2020 11:59pm" -w "" <events.txt
 
 will match all dates from December 31st, 2020, one minute before midnight
 (included). Note: this only works if your locale has an am/pm format, see
-.IR date (1).
+.Xr date 1 .
 
-.SH AUTHORS
-Sebastiano Tronto <sebastiano.tronto@gmail.com>
+.Sh AUTHORS
+.An Sebastiano Tronto Aq Mt sebastiano.tronto@gmail.com
 
-.SH SOURCE CODE
-Source code is available at https://github.com/sebastianotronto/sdep
+.Sh SOURCE CODE
+Source code is available at
+.Lk https://github.com/sebastianotronto/sdep
 
-.SH SEE ALSO
-.IR date (1),
-.IR strftime (3),
-.IR strptime (3)
+.Sh SEE ALSO
+.Xr date 1 ,
+.Xr strftime 3 ,
+.Xr strptime 3
