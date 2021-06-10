@@ -4,7 +4,7 @@ VERSION = 0.1
 
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
-SDEPDATA = ${XDG_DATA_HOME}/sdep
+SDEPDATA = ${HOME}/.local/share/sdep
 SCRIPTS = sdep-add sdep-checknow sdep-clear sdep-edit sdep-list
 
 CPPFLAGS = -D_XOPEN_SOURCE=700 -DVERSION=\"${VERSION}\"
@@ -21,10 +21,10 @@ options:
 	@echo "CC       = ${CC}"
 
 sdep:
-	${CC} ${CFLAGS} -o sdep sdep.c
+	${CC} ${CFLAGS} -o sdep.o sdep.c
 
 clean:
-	rm -f sdep sdep-${VERSION}.tar.gz
+	rm -rf sdep.o sdep-${VERSION}.tar.gz scripts-build
 
 dist: clean
 	mkdir -p sdep-${VERSION}
@@ -35,17 +35,24 @@ dist: clean
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f sdep ${DESTDIR}${PREFIX}/bin
+	cp -f sdep.o ${DESTDIR}${PREFIX}/bin/sdep
 	chmod 755 ${DESTDIR}${PREFIX}/bin/sdep
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	sed "s/VERSION/${VERSION}/g" < sdep.1 > ${DESTDIR}${MANPREFIX}/man1/sdep.1
+	sed "s/VERSION/${VERSION}/g" < sdep.1 \
+				     > ${DESTDIR}${MANPREFIX}/man1/sdep.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/sdep.1
 
 scripts:
-	mkdir -p ${DESTDIR}${SDEPDATA}
+	mkdir -p scripts-build
+	mkdir -p ${SDEPDATA}
 	for s in ${SCRIPTS}; do\
-		sed "s|SDEPDATA|${DESTDIR}${SDEPDATA}|g" < scripts/$$s \
-		     > ${DESTDIR}${PREFIX}/bin/$$s ;\
+		sed "s|SDEPDATA|${SDEPDATA}|g" < scripts/$$s \
+		                               > scripts-build/$$s ;\
+	done
+
+scriptsinstall:
+	for s in ${SCRIPTS}; do\
+		cp -f scripts-build/$$s ${DESTDIR}${PREFIX}/bin ; \
 		chmod 755 ${DESTDIR}${PREFIX}/bin/$$s ;\
 	done
 
