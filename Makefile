@@ -5,7 +5,7 @@ VERSION = 0.1
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 SDEPDATA = ${HOME}/.local/share/sdep
-SCRIPTS = sdep-add sdep-checknow sdep-clear sdep-edit sdep-list
+SCRIPTS = sdep-add sdep-checknow sdep-clear sdep-edit sdep-list sdep-checkpast
 
 CPPFLAGS = -D_XOPEN_SOURCE=700 -DVERSION=\"${VERSION}\"
 CFLAGS   = -pedantic -Wall -Os ${CPPFLAGS}
