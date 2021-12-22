@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Open specified file in sdep folder in editor.
+
+# Usage: sdep-edit [file]
+# No options = once
+
+file="/home/sebastiano/.local/share/sdep/${1:-once}"
+editor=${VISUAL:-vi}
+
+$editor "$file"

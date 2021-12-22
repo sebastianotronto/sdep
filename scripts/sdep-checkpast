@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Run this at boot to receive a notification about past events that you might
+# have missed
+#
+# The events are read from the following files in SDEPDATA folder:
+#	once: events that only happen once; full date needs to be specified
+#	daily: events that happen every day; only specify the time in HH:MM format
+#	weekly: only specify Weekday + time
+#	monthly: only specify day of the month + time
+
+# Requires: notify-send.
+
+notify="notify-send -t 3600000"
+
+sdep-list past | \
+while read text; do
+	date=$(echo "$text" | sed 's/\t.*//')
+	event=$(echo "$text" | sed 's/.*\t//')
+	$notify "$date" "$event"
+done

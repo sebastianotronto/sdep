@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# Lists events happening in a specific time range.
+# Recurring events are listed at most once, and only if their first occurrence
+# is in the range.
+#
+# The events are read from the following files in the /home/sebastiano/.local/share/sdep folder:
+#	once: events that only happen once; full date needs to be specified
+#	daily: events that happen every day; only specify the time in HH:MM format
+#	weekly: only specify Weekday + time
+#	monthly: only specify day of the month + time
+
+# This script uses relies on the non-portable -d option of GNU date.
+
+# Usage: sdep-list [today|tomorrow|week|nextweek|past|future]
+# No options = all
+
+from=""
+to=""
+w="%d %b %H:%M"
+
+case $1 in
+	today)
+		from="$(date +%Y-%m-%d) 0:00"
+		to="$(date +%Y-%m-%d) 23:59"
+		w="%H:%M"
+		;;
+	tomorrow)
+		from="$(date -d tomorrow +%Y-%m-%d) 0:00"
+		to="$(date -d tomorrow +%Y-%m-%d) 23:59"
+		w="%H:%M"
+		;;
+	week)
+		from="$(date -d 'last monday' +%Y-%m-%d) 0:00"
+		to="$(date -d sunday +%Y-%m-%d) 23:59"
+		w="%a %H:%M"
+		;;
+	nextweek)
+		from="$(date -d 'next monday' +%Y-%m-%d) 0:00"
+		to="$(date -d 'next monday + 6 days' +%Y-%m-%d) 23:59"
+		w="%a %H:%M"
+		;;
+	past)
+		to="$(date +'%Y-%m-%d %H:%M')"
+		;;
+	future)
+		from="$(date +'%Y-%m-%d %H:%M')"
+		;;
+	*)
+		;;
+esac
+
+tempfile=$(mktemp)
+
+cat "/home/sebastiano/.local/share/sdep/once" > "$tempfile"
+sed "s/^/$(date +%Y-%m-%d) /" <"/home/sebastiano/.local/share/sdep/daily" | >> "$tempfile"
+while read line; do
+	weekday=$(echo "$line" | sed "s/ .*$//")
+	echo "$line" | sed "s/^[ ]*[^ ]* /$(date -d $weekday +%Y-%m-%d) /"
+done <"/home/sebastiano/.local/share/sdep/weekly" >> "$tempfile"
+sed "s/^[ ]*/$(date +%Y-%m-)/" <"/home/sebastiano/.local/share/sdep/daily" >> "$tempfile"
+
+sdep -w "$w" -f "$from" -t "$to" <"$tempfile"
+
+rm "$tempfile"
