@@ -50,7 +50,7 @@ scripts:
 		                               > scripts-build/$$s ;\
 	done
 
-scriptsinstall:
+scriptsinstall: scripts
 	for s in ${SCRIPTS}; do\
 		cp -f scripts-build/$$s ${DESTDIR}${PREFIX}/bin ; \
 		chmod 755 ${DESTDIR}${PREFIX}/bin/$$s ;\
