@@ -85,11 +85,11 @@ between multiple devices using something like
 [rsync](https://rsync.samba.org/).
 
 ## Scripts
-The `scripts` folder contains the few scripts that I use. They are basically 
-just a more elaborate version of the calendar system described above,
-with support for recurring events (e.g. weekly, daily). You can install them
-with `make scripts` and then `make scriptsinstall`, but first make sure to
-adjust them to match your local configuration.
+The `scripts` folder contains the few scripts that I use. They are
+basically just a more elaborate version of the calendar system described
+above, with support for recurring events (e.g. weekly, daily). You
+can install them with `make scripts` and then `make scriptsinstall`,
+but first make sure to adjust them to match your local configuration.
 For example check that the folder SDEPDATA in Makefile suits you.
 
 Most of the scripts rely on the `-d` option of the GNU date utility, so you
