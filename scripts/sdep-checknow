@@ -3,7 +3,7 @@
 # Run this every minute (for example using cron) to receive a notification
 # when an event happens.
 #
-# The events are read from the following files in SDEPDATA folder:
+# The events are read from the following files in $sdepdata folder:
 #	once: events that only happen once; full date needs to be specified
 #	daily: events that happen every day; only specify the time in HH:MM format
 #	weekly: only specify Weekday + time
@@ -14,6 +14,8 @@
 # might have to change if you are not on Linux (on some systems you can
 # accomplish the same with -j).
 
+sdepdata="${XDG_DATA_HOME:-$HOME/.local}/sdep"
+
 #notify="notify-send -t 3600000"
 notify=herbe
 title="$(date +%H:%M)"
@@ -23,17 +25,17 @@ sdepnotify() {
 }
 
 # One-off events
-sdepnotify <"SDEPDATA/once"
+sdepnotify <"$sdepdata/once"
 
 # Daily events
-sed "s/^/$(date +%Y-%m-%d) /" <"SDEPDATA/daily" | sdepnotify 
+sed "s/^/$(date +%Y-%m-%d) /" <"$sdepdata/daily" | sdepnotify 
 
 # Weekly events - needs GNU date (try -j intead of -d on BSD)
 while read line; do
 	weekday=$(echo "$line" | sed "s/ .*$//")
 	echo "$line" | sed "s/^[ ]*[^ ]* /$(date -d $weekday +%Y-%m-%d) /"
-done <"SDEPDATA/weekly" | \
+done <"$sdepdata/weekly" | \
 sdepnotify
 
 # Monthly events
-sed "s/^[ ]*/$(date +%Y-%m-)/" <"SDEPDATA/daily" | sdepnotify 
+sed "s/^[ ]*/$(date +%Y-%m-)/" <"$sdepdata/daily" | sdepnotify 

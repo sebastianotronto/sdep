@@ -5,7 +5,9 @@
 # Usage: sdep-edit [file]
 # No options = once
 
-file="SDEPDATA/${1:-once}"
+sdepdata="${XDG_DATA_HOME:-$HOME/.local}/sdep"
+
+file="$sdepdata/${1:-once}"
 editor=${VISUAL:-vi}
 
 $editor "$file"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Adds a line to SDEPDATA/once. It is possible to specify a date, which will be
+# Adds a line to $sdepdata/once. It is possible to specify a date, which will be
 # read by date -d and prepended to the input text.
 # -d is a non-portable option of GNU date. On some other systems one can
 # accomplish the same with the -j option.
@@ -8,7 +8,9 @@
 # Usage: sdep-add [date]
 # Example: sdep-add "next monday"
 
-file="SDEPDATA/once"
+sdepdata="${XDG_DATA_HOME:-$HOME/.local}/sdep"
+
+file="$sdepdata/once"
 date=""
 
 [ -n "$1" ] && date=$(date -d "$1" +%Y-%m-%d)
