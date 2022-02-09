@@ -9,11 +9,13 @@
 #	weekly: only specify Weekday + time
 #	monthly: only specify day of the month + time
 
-# Requires: notify-send; the weekly part uses the non-portable -d option of
-# GNU date, which you might have to change if you are not on Linux (on some
-# systems you can accomplish the same with -j).
+# Requires: a command to send notifications such as herbe or notify-send.
+# The weekly part uses the non-portable -d option of GNU date, which you
+# might have to change if you are not on Linux (on some systems you can
+# accomplish the same with -j).
 
-notify="notify-send -t 3600000"
+#notify="notify-send -t 3600000"
+notify=herbe
 title="$(date +%H:%M)"
 
 sdepnotify() {

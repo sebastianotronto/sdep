@@ -9,9 +9,10 @@
 #	weekly: only specify Weekday + time
 #	monthly: only specify day of the month + time
 
-# Requires: notify-send.
+# Requires: a command to send notifications such as herbe or notify-send.
 
-notify="notify-send -t 3600000"
+#notify="notify-send -t 3600000"
+notify=herbe
 
 sdep-list past | \
 while read text; do
