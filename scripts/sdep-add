@@ -8,7 +8,7 @@
 # Usage: sdep-add [date]
 # Example: sdep-add "next monday"
 
-sdepdata="${XDG_DATA_HOME:-$HOME/.local}/sdep"
+sdepdata="${XDG_DATA_HOME:-$HOME/.local/}/sdep"
 
 file="$sdepdata/once"
 date=""

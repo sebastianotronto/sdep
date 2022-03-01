@@ -14,7 +14,7 @@
 # might have to change if you are not on Linux (on some systems you can
 # accomplish the same with -j).
 
-sdepdata="${XDG_DATA_HOME:-$HOME/.local}/sdep"
+sdepdata="${XDG_DATA_HOME:-$HOME/.local/share}/sdep"
 
 #notify="notify-send -t 3600000"
 notify=herbe

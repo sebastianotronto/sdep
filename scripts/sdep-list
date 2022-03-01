@@ -15,7 +15,7 @@
 # Usage: sdep-list [today|tomorrow|week|nextweek|past|future]
 # No options = all
 
-sdepdata="${XDG_DATA_HOME:-$HOME/.local}/sdep"
+sdepdata="${XDG_DATA_HOME:-$HOME/.local/share}/sdep"
 
 from=""
 to=""
@@ -55,7 +55,7 @@ esac
 tempfile=$(mktemp)
 
 cat "$sdepdata/once" > "$tempfile"
-sed "s/^/$(date +%Y-%m-%d) /" <"$sdepdata/daily" | >> "$tempfile"
+sed "s/^/$(date +%Y-%m-%d) /" <"$sdepdata/daily" >> "$tempfile"
 while read line; do
 	weekday=$(echo "$line" | sed "s/ .*$//")
 	echo "$line" | sed "s/^[ ]*[^ ]* /$(date -d $weekday +%Y-%m-%d) /"
