@@ -41,9 +41,10 @@ install: all
 				     > ${DESTDIR}${MANPREFIX}/man1/sdep.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/sdep.1
 
-scriptsinstall:
+scripts:
 	for s in ${SCRIPTS}; do\
-		cp -f scripts/$$s ${DESTDIR}${PREFIX}/bin ; \
+		sed "s|SDEPDATA|${SD}|g" < scripts/$$s > \
+			${DESTDIR}${PREFIX}/bin/$$s ; \
 		chmod 755 ${DESTDIR}${PREFIX}/bin/$$s ;\
 	done
 
@@ -51,5 +52,5 @@ uninstall:
 	rm -rf ${DESTDIR}${PREFIX}/bin/sdep ${DESTDIR}${MANPREFIX}/man1/sdep.1
 	for s in ${SCRIPTS}; do rm -rf ${DESTDIR}${PREFIX}/bin/$$s; done
 
-.PHONY: all options clean dist install uninstall
+.PHONY: all options clean dist install scripts uninstall
 

@@ -88,8 +88,9 @@ between multiple devices using something like
 The `scripts` folder contains the few scripts that I use. They are
 basically just a more elaborate version of the calendar system described
 above, with support for recurring events (e.g. weekly, daily). You
-can install them with `make scripts` and then `make scriptsinstall`,
-but first make sure to adjust them to match your local configuration.
+can install them with `sudo SD=/path/to/scripts/folder make scripts`,
+where `SD` specifies the path where the directory where you want your sdep
+files to be saved; for example it can be `/home/username/.sdep`.
 For example check that the folder SDEPDATA in Makefile suits you.
 
 Most of the scripts rely on the `-d` option of the GNU date utility, so you

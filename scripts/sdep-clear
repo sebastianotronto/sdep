@@ -1,12 +1,10 @@
 #!/bin/sh
 
-# Removes old events from specified file (default: $sdepdata/once).
+# Removes old events from specified file (default: SDEPDATA/once).
 
 # Usage: sdep-clear [file]
 
-sdepdata="${XDG_DATA_HOME:-$HOME/.local/share}/sdep"
-
-file="$sdepdata/${1:-once}"
+file="SDEPDATA/${1:-once}"
 temp=$(mktemp)
 
 sdep -t <"$file" >"$temp"

@@ -4,7 +4,7 @@
 # Recurring events are listed at most once, and only if their first occurrence
 # is in the range.
 #
-# The events are read from the following files in the $sdepdata folder:
+# The events are read from the following files in the SDEPDATA folder:
 #	once: events that only happen once; full date needs to be specified
 #	daily: events that happen every day; only specify the time in HH:MM format
 #	weekly: only specify Weekday + time
@@ -14,8 +14,6 @@
 
 # Usage: sdep-list [today|tomorrow|week|nextweek|past|future]
 # No options = all
-
-sdepdata="${XDG_DATA_HOME:-$HOME/.local/share}/sdep"
 
 from=""
 to=""
@@ -54,13 +52,13 @@ esac
 
 tempfile=$(mktemp)
 
-cat "$sdepdata/once" > "$tempfile"
-sed "s/^/$(date +%Y-%m-%d) /" <"$sdepdata/daily" >> "$tempfile"
+cat "SDEPDATA/once" > "$tempfile"
+sed "s/^/$(date +%Y-%m-%d) /" <"SDEPDATA/daily" >> "$tempfile"
 while read line; do
 	weekday=$(echo "$line" | sed "s/ .*$//")
 	echo "$line" | sed "s/^[ ]*[^ ]* /$(date -d $weekday +%Y-%m-%d) /"
-done <"$sdepdata/weekly" >> "$tempfile"
-sed "s/^[ ]*/$(date +%Y-%m-)/" <"$sdepdata/daily" >> "$tempfile"
+done <"SDEPDATA/weekly" >> "$tempfile"
+sed "s/^[ ]*/$(date +%Y-%m-)/" <"SDEPDATA/daily" >> "$tempfile"
 
 sdep -w "$w" -f "$from" -t "$to" <"$tempfile"
 
