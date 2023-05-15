@@ -50,7 +50,7 @@ struct Options {
 static void    add_event(struct tm t, char *text, EventList *evlist);
 static int     compare_tm(struct tm *t1, struct tm *t2);
 static int     compare_event(Event *event1, Event *event2);
-static Options default_op();
+static Options default_op(void);
 static int     events_in_range(EventList *evlist, Options op, Event *sel);
 static char   *format_line(Event ev, Options op, char *out);
 static void    read_input(Options op, EventList *evlist);
@@ -101,7 +101,7 @@ compare_event(Event *ev1, Event *ev2)
 }
 
 static Options
-default_op()
+default_op(void)
 {
 	Options op;
 	time_t t_now = time(NULL);
