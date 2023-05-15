@@ -20,8 +20,11 @@ date(1).  The dates should correspond to a unique minute in time.
 
 ## Installation
 
-Edit the Makefile to match your local configuration and type `make
-install`.
+1. Either clone the repository or download the latest release version
+   from the `releases` folder (warning: the release archive does not
+   contain the customization scripts).
+2. Edit the Makefile to match your local configuration and type
+   `make install`.
 
 ## Examples
 
@@ -101,3 +104,11 @@ For example check that the folder SDEPDATA in Makefile suits you.
 
 Most of the scripts rely on the `-d` option of the GNU date utility,
 so you should change that too if you are on a BSD system or on MacOS.
+
+## Version history
+
+| Version | Release date | Comment         |
+|:--------|:-------------|:---------------:|
+| 0.2     | 2023-05-23   | Minor fixes     |
+| 0.1     | 2021-05-08   | Initial release |
+

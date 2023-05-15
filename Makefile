@@ -28,13 +28,14 @@ debug:
 	${CC} ${CFLAGS} -o sdep sdep.c
 
 clean:
-	rm -rf sdep sdep-${VERSION}.tar.gz
+	rm -rf sdep
 
 dist: clean
 	mkdir -p sdep-${VERSION}
 	cp -R LICENSE Makefile README.md sdep.1 sdep.c sdep-${VERSION}
 	tar -cf sdep-${VERSION}.tar sdep-${VERSION}
 	gzip sdep-${VERSION}.tar
+	mv sdep-${VERSION}.tar.gz releases/
 	rm -rf sdep-${VERSION}
 
 install: all
