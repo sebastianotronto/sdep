@@ -166,7 +166,8 @@ format_line(Event ev, Options op, char *out)
 static int
 is_space(char c)
 {
-	return c == ' ' || c == '\t';
+	return c == ' '  || c == '\f' || c == '\n' ||
+	       c == '\r' || c == '\t' || c == '\v;
 }
 
 static void
