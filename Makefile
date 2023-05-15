@@ -8,6 +8,8 @@ SCRIPTS = sdep-add sdep-checknow sdep-checkpast sdep-clear sdep-edit sdep-list
 
 CPPFLAGS = -D_XOPEN_SOURCE=700 -DVERSION=\"${VERSION}\"
 CFLAGS   = -pedantic -Wall -Os ${CPPFLAGS}
+DBGFLAGS = -pedantic -Wall -Wextra \
+           -fsanitize=address -fsanitize=undefined ${CPPFLAGS}
 
 CC = cc
 
@@ -20,6 +22,9 @@ options:
 	@echo "CC       = ${CC}"
 
 sdep:
+	${CC} ${CFLAGS} -o sdep sdep.c
+
+debug:
 	${CC} ${CFLAGS} -o sdep sdep.c
 
 clean:
@@ -52,5 +57,5 @@ uninstall:
 	rm -rf ${DESTDIR}${PREFIX}/bin/sdep ${DESTDIR}${MANPREFIX}/man1/sdep.1
 	for s in ${SCRIPTS}; do rm -rf ${DESTDIR}${PREFIX}/bin/$$s; done
 
-.PHONY: all options clean dist install scripts uninstall
+.PHONY: all options debug clean dist install scripts uninstall
 
