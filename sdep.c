@@ -156,6 +156,8 @@ format_line(Event ev, Options op, char *out)
 	l = strlen(out);
 
 	str_copy(out+l, op.separator, MAXLEN - l);
+	l = strlen(out);
+
 	str_copy(out+l, ev.text, MAXLEN - l);
 
 	return out;
