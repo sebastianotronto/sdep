@@ -6,8 +6,6 @@
 #include <string.h>
 #include <time.h>
 
-#define min(X,Y) (X<Y ? X : Y)
-
 /*
  * Maximum number of characters in a line. The rest will be truncated.
  * Change this if you need very long lines.
