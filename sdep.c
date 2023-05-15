@@ -66,7 +66,7 @@ add_event(struct tm t, char *text, EventList *evlist)
 	EventNode *next = malloc(sizeof(EventNode));
 
 	next->ev.time = t;
-	next->ev.text = malloc(sizeof(char) * l);
+	next->ev.text = malloc(l);
 	strncpy(next->ev.text, text, l);
 	next->ev.text = strtrim(next->ev.text);
 	next->next = NULL;
@@ -107,9 +107,9 @@ default_op(void)
 	time_t t_now = time(NULL);
 	struct tm *now = localtime(&t_now);
 
-	op.format_in  = malloc(sizeof(char) * MAXLEN);
-	op.format_out = malloc(sizeof(char) * MAXLEN);
-	op.separator  = malloc(sizeof(char) * MAXLEN);
+	op.format_in  = malloc(MAXLEN);
+	op.format_out = malloc(MAXLEN);
+	op.separator  = malloc(MAXLEN);
 	strcpy(op.format_in,  default_format);
 	strcpy(op.format_out, default_format);
 	strcpy(op.separator,  "\t");
