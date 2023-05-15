@@ -47,16 +47,16 @@ struct Options {
 	char      *separator;
 };
 
-static void    add_event(struct tm t, char *text, EventList *evlist);
+static void    add_event(struct tm, char *, EventList *);
 static int     compare_tm(const void *, const void *);
 static int     compare_event(const void *, const void *);
 static Options default_op(void);
-static int     events_in_range(EventList *evlist, Options op, Event *sel);
-static char   *format_line(Event ev, Options op, char *out);
-static void    read_input(Options op, EventList *evlist);
-static Options read_op(int argc, char *argv[]);
-static char   *strtrim(char *t);
-static void    write_output(Options op, Event *ev, int n);
+static int     events_in_range(EventList *, Options, Event *);
+static char   *format_line(Event, Options, char *);
+static void    read_input(Options, EventList *);
+static Options read_op(int, char *[]);
+static char   *strtrim(char *);
+static void    write_output(Options, Event *, int);
 
 
 static void
