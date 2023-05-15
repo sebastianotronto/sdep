@@ -1,0 +1,94 @@
+.Dd May 13, 2021
+.Dt SDEP 1
+.Os
+.Sh NAME
+.Nm sdep
+.Nd a simple "date+event" line parser
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl dv
+.Op Ar +format
+.Op Fl f Op Ar date
+.Op Fl t Op Ar date
+.Op Fl w Ar format
+.Op Fl s Ar string
+
+.Sh DESCRIPTION
+.Nm
+reads lines of the form
+
+.Dl Ar "date text"
+
+from stdin and writes to stdout those lines such that
+.Ar date
+is between the dates specified by the
+.Fl f
+and
+.Fl t
+options, both defaulting to the current minute.
+The dates should correspond to a unique minute in time. The format for
+.Ar date
+can be specified with the same syntax as for
+.Xr date 1 .
+
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl d
+print the default date format and exit.
+.It Fl f Op Ar date
+initial date for the range (default: current minute). If
+.Ar date
+is not specified there will be no lower bound for the dates.
+.It Fl s Ar string
+change the string that separates the date from the text in the output
+lines (deafult: "\t").
+.It Fl t Op Ar date
+final date for the range (default: current minute). If
+.Ar date
+is not specified then there will be no upper bound for the dates.
+.It Fl v
+print version information and exit.
+.It Fl w Ar format
+change the format in which the date is written in the output lines.
+
+.Sh EXAMPLES
+If
+.Ar events.txt
+contains lines formatted as
+.Ar "date text"
+then
+
+.Dl sdep -f <events.txt
+
+will print all the lines whose date is in the past, while
+
+.Dl sdep -t -w "%A" <events.txt
+
+will print all lines whose date is in the future, showing only the day of the
+week and the text.
+
+.Dl sdep -f "1999-01-01 00:00" -t "1999-12-31 23:59" -w "" <events.txt
+
+will show only the
+.Ar text
+of all lines with a date in 1999. You can specify a different format for the
+dates, for example
+
+.Dl sdep +"%m/%d/%Y %I:%M%p" -t "12/31/2020 11:59pm" -w "" <events.txt
+
+will match all dates from December 31st, 2020, one minute before midnight
+(included). Note: this only works if your locale has an am/pm format, see
+.Xr date 1 .
+
+.Sh AUTHORS
+.An Sebastiano Tronto Aq Mt sebastiano.tronto@gmail.com
+
+.Sh SOURCE CODE
+Source code is available at
+.Lk https://github.com/sebastianotronto/sdep
+
+.Sh SEE ALSO
+.Xr date 1 ,
+.Xr strftime 3 ,
+.Xr strptime 3

@@ -32,7 +32,7 @@ clean:
 
 dist: clean
 	mkdir -p sdep-${VERSION}
-	cp -R LICENSE Makefile README.md sdep.1 sdep.c sdep-${VERSION}
+	cp -R LICENSE Makefile README sdep.1 sdep.c sdep-${VERSION}
 	tar -cf sdep-${VERSION}.tar sdep-${VERSION}
 	gzip sdep-${VERSION}.tar
 	rm -rf sdep-${VERSION}
