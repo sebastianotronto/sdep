@@ -18,45 +18,46 @@
  */
 static char *default_format = "%Y-%m-%d %H:%M";
 
-typedef struct Event     Event;
+
+typedef struct Event Event;
 typedef struct EventList EventList;
 typedef struct EventNode EventNode;
-typedef struct Options   Options;
+typedef struct Options Options;
 
 struct Event{
-	struct tm  time;
-	char      *text;
+	struct tm time;
+	char *text;
 };
 
 struct EventList {
 	EventNode *first;
 	EventNode *last;
-	int        count;
+	int count;
 };
 
 struct EventNode {
-	Event      ev;
+	Event ev;
 	EventNode *next;
 };
 
 struct Options {
-	struct tm  from;
-	struct tm  to;
-	char      *format_in;
-	char      *format_out;
-	char      *separator;
+	struct tm from;
+	struct tm to;
+	char *format_in;
+	char *format_out;
+	char *separator;
 };
 
-static void    add_event(struct tm, char *, EventList *);
-static int     compare_tm(const void *, const void *);
-static int     compare_event(const void *, const void *);
+static void add_event(struct tm, char *, EventList *);
+static int compare_tm(const void *, const void *);
+static int compare_event(const void *, const void *);
 static Options default_op(void);
-static int     events_in_range(EventList *, Options, Event *);
-static char   *format_line(Event, Options, char *);
-static void    read_input(Options, EventList *);
+static int events_in_range(EventList *, Options, Event *);
+static char *format_line(Event, Options, char *);
+static void read_input(Options, EventList *);
 static Options read_op(int, char *[]);
-static char   *strtrim(char *);
-static void    write_output(Options, Event *, int);
+static char *strtrim(char *);
+static void write_output(Options, Event *, int);
 
 
 static void
