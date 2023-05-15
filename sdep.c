@@ -56,7 +56,7 @@ static char *format_line(Event, Options, char *);
 static int is_space(char);
 static void read_input(Options, EventList *);
 static Options read_op(int, char *[]);
-static char *strtrim(char *);
+static char *str_trim(char *);
 static void write_output(Options, Event *, int);
 
 
@@ -69,7 +69,7 @@ add_event(struct tm t, char *text, EventList *evlist)
 	next->ev.time = t;
 	next->ev.text = malloc(l);
 	strncpy(next->ev.text, text, l);
-	next->ev.text = strtrim(next->ev.text);
+	next->ev.text = str_trim(next->ev.text);
 	next->next = NULL;
 
 	if (++evlist->count == 1) {
@@ -223,7 +223,7 @@ read_op(int argc, char *argv[])
 }
 
 static char *
-strtrim(char *t)
+str_trim(char *t)
 {
 	char *s;
 
