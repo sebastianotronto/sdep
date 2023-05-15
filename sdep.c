@@ -48,8 +48,8 @@ struct Options {
 };
 
 static void    add_event(struct tm t, char *text, EventList *evlist);
-static int     compare_tm(struct tm *t1, struct tm *t2);
-static int     compare_event(Event *event1, Event *event2);
+static int     compare_tm(const void *, const void *);
+static int     compare_event(const void *, const void *);
 static Options default_op(void);
 static int     events_in_range(EventList *evlist, Options op, Event *sel);
 static char   *format_line(Event ev, Options op, char *out);
@@ -81,8 +81,11 @@ add_event(struct tm t, char *text, EventList *evlist)
 }
 
 static int
-compare_tm(struct tm *t1, struct tm *t2)
+compare_tm(const void *v1, const void *v2)
 {
+	const struct tm *t1 = v1;
+	const struct tm *t2 = v2;
+
 	if (t1->tm_year != t2->tm_year)
 		return t1->tm_year - t2->tm_year;
 	if (t1->tm_mon != t2->tm_mon)
@@ -95,8 +98,11 @@ compare_tm(struct tm *t1, struct tm *t2)
 }
 
 static int
-compare_event(Event *ev1, Event *ev2)
+compare_event(const void *v1, const void *v2)
 {
+	const Event *ev1 = v1;
+	const Event *ev2 = v2;
+
 	return compare_tm(&ev1->time, &ev2->time);
 }
 
@@ -129,14 +135,12 @@ events_in_range(EventList *evlist, Options op, Event *sel)
 	EventNode *i;
 	int n = 0;
 
-
 	for (i = evlist->first; i != NULL; i = i->next)
 		if (compare_tm(&i->ev.time, &op.from) >= 0 &&
 		    compare_tm(&i->ev.time, &op.to) <= 0)
 			sel[n++] = i->ev;
 
-	qsort(sel, n, sizeof(Event),
-	      (int (*)(const void *, const void *))compare_event);
+	qsort(sel, n, sizeof(Event), compare_event);
 
 	return n;
 }
