@@ -1,6 +1,5 @@
 /* See LICENSE file for copyright and license details. */
 
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,6 +53,7 @@ static int compare_event(const void *, const void *);
 static Options default_op(void);
 static int events_in_range(EventList *, Options, Event *);
 static char *format_line(Event, Options, char *);
+static int is_space(char);
 static void read_input(Options, EventList *);
 static Options read_op(int, char *[]);
 static char *strtrim(char *);
@@ -156,6 +156,12 @@ format_line(Event ev, Options op, char *out)
 	return out;
 }
 
+static int
+is_space(char c)
+{
+	return c == ' ' || c == '\t';
+}
+
 static void
 read_input(Options op, EventList *evlist)
 {
@@ -221,8 +227,8 @@ strtrim(char *t)
 {
 	char *s;
 
-	for (s = &t[strlen(t)-1]; s != t && isspace(*s); *s = '\0', s--);
-	for (; *t != '\0' && isspace(*t); t++);
+	for (s = &t[strlen(t)-1]; s != t && is_space(*s); *s = '\0', s--);
+	for (; *t != '\0' && is_space(*t); t++);
 
 	return t;
 }
