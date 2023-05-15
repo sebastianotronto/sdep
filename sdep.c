@@ -56,6 +56,7 @@ static char *format_line(Event, Options, char *);
 static int is_space(char);
 static void read_input(Options, EventList *);
 static Options read_op(int, char *[]);
+static void str_copy(char *, char *, int);
 static char *str_trim(char *);
 static void write_output(Options, Event *, int);
 
@@ -63,12 +64,12 @@ static void write_output(Options, Event *, int);
 static void
 add_event(struct tm t, char *text, EventList *evlist)
 {
-	int l = strlen(text)+1;
+	size_t l = strlen(text)+1;
 	EventNode *next = malloc(sizeof(EventNode));
 
 	next->ev.time = t;
 	next->ev.text = malloc(l);
-	strncpy(next->ev.text, text, l);
+	str_copy(next->ev.text, text, l);
 	next->ev.text = str_trim(next->ev.text);
 	next->next = NULL;
 
@@ -149,9 +150,13 @@ events_in_range(EventList *evlist, Options op, Event *sel)
 static char *
 format_line(Event ev, Options op, char *out)
 {
+	size_t l;
+
 	strftime(out, MAXLEN, op.format_out, &ev.time);
-	strncat(out, op.separator, MAXLEN - strlen(out));
-	strncat(out, ev.text, MAXLEN - strlen(out));
+	l = strlen(out);
+
+	str_copy(out+l, op.separator, MAXLEN - l);
+	str_copy(out+l, ev.text, MAXLEN - l);
 
 	return out;
 }
@@ -183,8 +188,8 @@ read_op(int argc, char *argv[])
 	 * This changes the way other options are read */
 	for (i = 1; i < argc; i++) {
 		if (argv[i][0] == '+') {
-			strncpy(op.format_in,  &argv[i][1], MAXLEN);
-			strncpy(op.format_out, &argv[i][1], MAXLEN);
+			str_copy(op.format_in,  &argv[i][1], MAXLEN);
+			str_copy(op.format_out, &argv[i][1], MAXLEN);
 		}
 	}
 
@@ -196,7 +201,7 @@ read_op(int argc, char *argv[])
 			puts(default_format);
 			exit(0);
 		} else if (!strcmp(argv[i], "-s")) {
-			strncpy(op.separator, argv[++i], MAXLEN);
+			str_copy(op.separator, argv[++i], MAXLEN);
 		} else if (!strcmp(argv[i], "-f")) {
 			if (i+1 >= argc ||
 			    strptime(argv[i+1], op.format_in, &op.from) == NULL)
@@ -220,6 +225,17 @@ read_op(int argc, char *argv[])
 	}
 
 	return op;
+}
+
+/*
+ * Copy up to n characters of the string str to dst and append '\0'.
+ * Suggested by NRK.
+ */
+static void
+str_copy(char *dst, char *src, int n)
+{
+	if (memccpy(dst, src, '\0', n) == NULL)
+		dst[n-1] = '\0';
 }
 
 static char *
