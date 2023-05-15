@@ -16,7 +16,7 @@
  * Default date format. Anything that strftime(3) understands works, but 
  * it should determine a date completely up to the minute.
  */
-static char *default_format  = "%Y-%m-%d %H:%M";
+static char *default_format = "%Y-%m-%d %H:%M";
 
 typedef struct Event     Event;
 typedef struct EventList EventList;
@@ -120,9 +120,9 @@ default_op(void)
 }
 
 /*
-* Saves the events in ev[] that happen between op->from and op->to in sel[]
-* sorted by date and returns their number.
-*/
+ * Saves the events in ev[] that happen between op->from and op->to in sel[]
+ * sorted by date and returns their number.
+ */
 static int
 events_in_range(EventList *evlist, Options op, Event *sel)
 {
