@@ -10,7 +10,7 @@
  * Maximum number of characters in a line. The rest will be truncated.
  * Change this if you need very long lines.
  */
-static const int MAXLEN = 10000;
+#define MAXLEN 10000
 
 /*
  * Default date format. Anything that strftime(3) understands works, but 
